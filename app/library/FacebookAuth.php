@@ -53,6 +53,7 @@ class FacebookAuth {
             return $oAuth2Client->getLongLivedAccessToken($accessToken);
         } catch(\Facebook\Exceptions\FacebookSDKException $e) {
             error_log('Facebook SDK returned an error: '. $e->getMessage());
+            $this->logout('Something is wrong. Please try to login again.');
             exit;
         }
     }
@@ -69,6 +70,7 @@ class FacebookAuth {
             return $user_data;
         } catch(\Facebook\Exceptions\FacebookSDKException $e) {
             error_log('Facebook SDK returned an error: '. $e->getMessage());
+            $this->logout('Something is wrong. Please try to login again.');
             exit;
         }
     }
@@ -85,5 +87,13 @@ class FacebookAuth {
      */
     public function getCustomLoginUrl() {
         return Facebook::getCustomLoginUrl();
+    }
+
+    /**
+     * @param  string
+     */
+    public function logout($message="") {
+        unset($_SESSION['facebook_access_token']);
+        header("Location:index.php?message=$message");
     }
 }

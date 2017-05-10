@@ -3,6 +3,7 @@ require_once "vendor/autoload.php";
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 use App\Config\Database;
+use App\Library\Input;
 
 // set the default timezone 
 date_default_timezone_set('Asia/Kuala_Lumpur');
@@ -21,3 +22,6 @@ $conn = Database::getInstance();
 
 // obtaining the entity manager
 $entityManager = EntityManager::create($conn, $config);
+
+// create input to get superglobal variable
+$input = new Input;

@@ -7,10 +7,10 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
 	/**
 	 * @param  array
 	 */
-    public function updateOrCreate(array $user_data=[]) {
-        if (empty($user = $this->findOneBy(array('fb_id' => $user_data['id'])))) {
+	public function updateOrCreate(array $user_data=[]) {
+		if (empty($user = $this->findOneBy(array('fb_id' => $user_data['id'])))) {
 			$user = new User;
-		    $user->setFirstName($user_data['first_name']);
+			$user->setFirstName($user_data['first_name']);
 			$user->setLastName($user_data['last_name']);
 			$user->setEmail($user_data['email']);
 			$user->setImage($user_data['picture']['url']);
@@ -31,12 +31,12 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
      */
     public function update(User $user, array $user_data=[]) {
     	$user->setFirstName($user_data['first_name']);
-		$user->setLastName($user_data['last_name']);
-		$user->setEmail($user_data['email']);
-		$user->setImage($user_data['picture']['url']);
-		$user->setFbId($user_data['id']);
-		$user->setAccessToken($user_data['access_token']);
-		$user->setStatus($user_data['status']);
-		$this->getEntityManager()->flush();
+    	$user->setLastName($user_data['last_name']);
+    	$user->setEmail($user_data['email']);
+    	$user->setImage($user_data['picture']['url']);
+    	$user->setFbId($user_data['id']);
+    	$user->setAccessToken($user_data['access_token']);
+    	$user->setStatus($user_data['status']);
+    	$this->getEntityManager()->flush();
     }
 }
