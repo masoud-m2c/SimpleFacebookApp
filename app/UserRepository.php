@@ -39,4 +39,13 @@ class UserRepository extends EntityRepository implements UserRepositoryInterface
     	$user->setStatus($user_data['status']);
     	$this->getEntityManager()->flush();
     }
+
+    /**
+     * @param  string
+     */
+    public function deauthUser($fb_id) {
+    	$user = $this->findOneBy(array('fb_id' => $fb_id));
+    	$user->deauth();
+    	$this->getEntityManager()->flush();
+    }
 }

@@ -120,6 +120,10 @@ class User {
         $this->status = $status;
     }
 
+    public function deauth() {
+        $this->status = False;
+    }
+
     public function getCreated() {
         return $this->created;
     }

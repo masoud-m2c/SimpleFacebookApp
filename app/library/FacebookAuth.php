@@ -96,4 +96,32 @@ class FacebookAuth {
         unset($_SESSION['facebook_access_token']);
         header("Location:index.php?message=$message");
     }
+
+    /**
+     * @param  string $input
+     * @return string
+     */
+    public function base64_url_decode($input) {
+        return base64_decode(strtr($input, '-_', '+/'));
+    }
+
+    /**
+     * @param  string $signed_request
+     * @return array|null
+     */
+    public function parseSignedRequest($signed_request) {
+        list($encoded_sig, $payload) = explode('.', $signed_request, 2);
+
+        // decode the data
+        $sig = $this->base64_url_decode($encoded_sig);
+        $data = json_decode($this->base64_url_decode($payload), true);
+
+        // confirm the signature
+        $expected_sig = hash_hmac('sha256', $payload, Facebook::getAppSecret(), $raw = true);
+        if ($sig !== $expected_sig) {
+          error_log('Bad Signed JSON signature!');
+          return null;
+        }
+        return $data;
+    }
 }
