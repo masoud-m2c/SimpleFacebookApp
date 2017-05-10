@@ -1,0 +1,4 @@
+# dependency directory
+vendor
+
+composer.lock
