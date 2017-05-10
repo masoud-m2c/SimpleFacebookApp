@@ -8,6 +8,8 @@ $accessToken = $auth->getAccessToken();
 
 if (isset($accessToken)) {
 	// Logged in
+	$user_data = $auth->getUserProfile(); // get user profile
+	$entityManager->getRepository('App\User')->updateOrCreate($user_data);
 	header('location:dashboard.php');
 } else {
 	if ($helper->getError()) {
