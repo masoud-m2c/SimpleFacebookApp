@@ -14,11 +14,11 @@ class FacebookAuth {
      */
     public function getAccessToken() {
         if (!isset($_SESSION['facebook_access_token'])) {
-        	// Try to get access token
-    		try {
-    	    	$helper = $this->getRedirectLoginHelper();
+            // Try to get access token
+            try {
+                $helper = $this->getRedirectLoginHelper();
                 $accessToken = $helper->getAccessToken();
-                if(!empty($accessToken)){
+                if (!empty($accessToken)){
                     if (! $accessToken->isLongLived()) {
                         // Exchanges a short-lived access token for a long-lived one
                         $accessToken = $this->getLongLivedAccessToken($accessToken);
@@ -48,9 +48,9 @@ class FacebookAuth {
      */
     public function getLongLivedAccessToken($accessToken) {
         try {
-    		// OAuth 2.0 client handler helps to manage access tokens
+            // OAuth 2.0 client handler helps to manage access tokens
             $oAuth2Client = $this->fb->getOAuth2Client();
-        	return $oAuth2Client->getLongLivedAccessToken($accessToken);
+            return $oAuth2Client->getLongLivedAccessToken($accessToken);
         } catch(\Facebook\Exceptions\FacebookSDKException $e) {
             error_log('Facebook SDK returned an error: '. $e->getMessage());
             exit;
@@ -62,7 +62,7 @@ class FacebookAuth {
      */
     public function getUserProfile() {
         try {
-        	$profileRequest = $this->fb->get('/me?fields=name,first_name,last_name,email,picture', $this->getAccessToken());
+            $profileRequest = $this->fb->get('/me?fields=name,first_name,last_name,email,picture', $this->getAccessToken());
             $user_data = $profileRequest->getGraphNode()->asArray();
             $user_data['status'] = true;
             $user_data['access_token'] = $this->getAccessToken();
